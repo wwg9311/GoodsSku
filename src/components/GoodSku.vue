@@ -2,10 +2,10 @@
   <ul class="sku-list">
     <li v-for="(sku, skuIndex) in skuList" :key="sku.uuid">
       <i
-        class="iconfont btn-del"
+        class="el-icon-error btn-del"
         v-show="skuList.length > 1"
         @click="handleDelSku(skuIndex)"
-      >&#xe68b;</i>
+      ></i>
 
       <div class="sku-name">
         <h4>规格名</h4>
@@ -18,10 +18,10 @@
           <li v-for="(option, index) in sku.skuOption" :key="index">
             <el-input v-model="option.optionName"></el-input>
             <i
-              class="iconfont btn-del"
+              class="el-icon-error btn-del"
               v-show="sku.skuOption.length > 1"
               @click="handleDelOption(sku.skuOption, index)"
-            >&#xe68b;</i>
+            ></i>
           </li>
           <li>
             <el-button
@@ -113,17 +113,11 @@ export default {
 
     .btn-del {
       display: none;
-      font-size: 12px;
-      width: 20px;
-      height: 20px;
-      border-radius: 10px;
       position: absolute;
       right: -10px;
       top: -10px;
-      background-color: #858598;
-      font-size: 12px;
-      color: #fff;
-      line-height: 20px;
+      font-size: 20px;
+      color: #858598;
       cursor: pointer;
     }
 
@@ -151,7 +145,9 @@ export default {
           }
 
           .btn-del {
-            transform: scale(0.6);
+            right: -7px;
+            top: -7px;
+            font-size: 14px;
           }
 
           &:not(:first-child) {
@@ -160,6 +156,11 @@ export default {
         }
       }
     }
+  }
+
+  > .el-button {
+    display: block;
+    margin: 0 auto;
   }
 }
 </style>

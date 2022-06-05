@@ -60,7 +60,7 @@ export default {
         }
       }
     },
-
+    // 初始化表格列
     initTableColumn() {
       const columns = [];
       this.skuList.forEach((sku, index) => {
@@ -73,7 +73,7 @@ export default {
       
       this.columns = columns;
     },
-    
+    // 初始化表格数据
     initTableData() {
       let result = [];
       for(let i = 0; i < this.skuList.length; i++) {
@@ -81,31 +81,32 @@ export default {
       }
       this.tableData = result;
     },
-
+    // 格式化商品规格
     formateData(list, index, result = []) {
       let newResult = [];
 
-      if(result.length) {
         result.forEach((item) => {
           list.forEach((skuOption) => {
             newResult.push({...item, ['field'+index]: skuOption.optionName})      
           })
         })
-      } else {
-        list.forEach(skuOption => {
-          newResult.push({['field'+index]: skuOption.optionName, count: '', price: ''})
-        })
-      }
+      
+        if(!result.length) {
+          list.forEach(skuOption => {
+            newResult.push({['field'+index]: skuOption.optionName, count: '', price: ''})
+          })
+        }
 
       return newResult
     },
-
+    // 初始化表格每一列的每一行占据几行
     initSpan() {
       this.skuList.forEach((item, index) => {
+        // 每一列的每一行占据的行数 = 其后规格数量的乘积
         this.spanData[index] = this.skuList.slice(index+1).reduce((cur, next) => cur * next.skuOption.length, 1) || 1
       })
     },
-
+    // 初始化基本数据
     initData() {
       this.initSpan();
       this.initTableColumn();
