@@ -1,6 +1,6 @@
 <template>
   <ul class="sku-list">
-    <li v-for="(sku, skuIndex) in skuList" :key="sku.uuid">
+    <li v-for="(sku, skuIndex) in skuList" :key="sku.id">
       <i
         class="el-icon-error btn-del"
         v-show="skuList.length > 1"
@@ -26,7 +26,7 @@
           <li>
             <el-button
               v-show="sku.skuOption.length < 3"
-             @click="handleAddOption(sku.skuOption)"
+              @click="handleAddOption(sku.skuOption)"
             >
               +新增规格值
             </el-button>
@@ -34,45 +34,43 @@
         </ul>
       </div>
     </li>
-    <el-button
-      v-show="skuList.length < 3"
-      @click="handleAddSku"
-    >新增其他规格</el-button>
+    <el-button v-show="skuList.length < 3" @click="handleAddSku"
+      >新增其他规格</el-button
+    >
   </ul>
 </template>
 
 <script>
+import { getRandomId } from "@/utils/index.js";
 export default {
-  name: 'GoodSku',
+  name: "GoodSku",
   data() {
     return {
-      skuList:[
+      skuList: [
         {
-          skuName:'',
-          skuOption: [
-            {optionName: ''}
-          ]
-        }
-      ]
-    }
+          id: getRandomId(),
+          skuName: "",
+          skuOption: [{ optionName: "" }],
+        },
+      ],
+    };
   },
   watch: {
     skuList: {
       handler(newVal) {
-        this.$emit('change', newVal)
+        this.$emit("change", newVal);
       },
-      deep: true
-    }
+      deep: true,
+    },
   },
   methods: {
     // 新增sku
     handleAddSku() {
       this.skuList.push({
-        skuName: '',
-        skuOption: [
-          { optionName: '' }
-        ]
-      })
+        id: getRandomId(),
+        skuName: "",
+        skuOption: [{ optionName: "" }],
+      });
     },
     // 删除sku
     handleDelSku(skuIndex) {
@@ -80,14 +78,14 @@ export default {
     },
     // 新增规格值
     handleAddOption(skuOption) {
-      skuOption.push({ optionName: '' })
+      skuOption.push({ optionName: "" });
     },
 
     handleDelOption(skuOptions, index) {
-      skuOptions.splice(index, 1)
-    }
-  }
-}
+      skuOptions.splice(index, 1);
+    },
+  },
+};
 </script>
 
 <style lang="less" scoped>
@@ -121,7 +119,8 @@ export default {
       cursor: pointer;
     }
 
-    .sku-name, .sku-option {
+    .sku-name,
+    .sku-option {
       display: flex;
       align-items: center;
       padding-bottom: 10px;
@@ -137,7 +136,7 @@ export default {
         flex-wrap: wrap;
         li {
           position: relative;
-          
+
           &:hover {
             > .btn-del {
               display: block;
@@ -145,9 +144,9 @@ export default {
           }
 
           .btn-del {
-            right: -7px;
-            top: -7px;
-            font-size: 14px;
+            right: -8px;
+            top: -8px;
+            font-size: 16px;
           }
 
           &:not(:first-child) {
